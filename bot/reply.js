@@ -175,7 +175,28 @@ async function checkAndReplyToMentions() {
 }
 
 // Configura o bot para rodar a cada 5 minutos
-setInterval(checkAndReplyToMentions, 5 * 60 * 1000);
+//setInterval(checkAndReplyToMentions, 5 * 60 * 1000);
 
 // Executa a função na inicialização
-checkAndReplyToMentions();
+//checkAndReplyToMentions();
+
+async function runTest() {
+  console.log("Iniciando teste da função sendTweetToAPI...");
+
+  // Dados de exemplo para o teste
+  const tweetDeExemplo = "Testando a integração entre JavaScript e Python. Este é um tweet de exemplo!";
+  const urlDeExemplo = "https://twitter.com/user_exemplo/status/1234567890123456789";
+
+  // Chamada da função com os dados de exemplo
+  const resultado = await sendTweetToAPI(tweetDeExemplo, urlDeExemplo);
+
+  if (resultado) {
+    console.log("Teste concluído com sucesso. A API Python retornou dados.");
+    console.log(resultado);
+  } else {
+    console.log("Teste falhou. Verifique se o seu servidor Python está rodando e acessível.");
+  }
+}
+
+// Inicia o teste
+runTest();
