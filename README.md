@@ -27,29 +27,31 @@ Consiste em um **bot para o X** que pode ser chamado via **@Verif1cAI**. Ao ser 
 
 ##  Como Executar o Projeto
 
-1.  **Pré-requisitos:** Certifique-se de ter [lista de pré-requisitos, como Python, Node.js, etc.] instalados.
+1.  **Pré-requisitos:** Certifique-se de ter lista de pré-requisitos, como Python, Node.js, etc. instalados.
 2.  **Clone o repositório:**
     ```sh
     git clone https://github.com/MillerAnacleto/VerificaAI.git
     ```
-3.  **Configurar credenciais:** Crie um arquivo `.env` com as chaves da API do Twitter, conforme o guia de configuração e a chave da openai.
-4.  **Instale as dependências:**
+3.  **Configurar credenciais:** Crie um arquivo `.env` com as chaves da API do Twitter, conforme o guia de configuração e a chave da openai. As chaves do twitter foram criadas usando o tutorial https://www.freecodecamp.org/news/how-to-create-an-ai-powered-bot/#heading-step-1-generate-the-twitter-api-key
+4.  **Instale as dependências e execute:**
     ```sh
+    # No terminal 1, inicie o bot
     cd bot
-    pip install -r requirements.txt
+    npm install dotenv twitter-apiv-v2
+    node reply.js
 
-    cd ../server
-    npm install
-    ```
-5.  **Inicie os serviços:**
-    ```sh
-    # No terminal 1, inicie o servidor
+    # No terminal 2, inicie o server
     cd server
-    node index.js
+    make install
+    make run
 
-    # No terminal 2, inicie o bot
-    cd ../bot
-    python bot.py
+    # No terminal 3, inicie o site
+    cd site
+    python -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    python manage.py migrate
+    python manage.py runserver
     ```
 
 ## Autores
