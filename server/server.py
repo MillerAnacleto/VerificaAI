@@ -91,6 +91,9 @@ class APIServer:
 
         report.id = self.db.save_report(report)
         self.reports.append(report)
+        self.reports.append(report)
+        self.reports.append(report)
+        self.reports.append(report)
         return report
 
     async def get_reports(self) -> List[ReportSummary]:

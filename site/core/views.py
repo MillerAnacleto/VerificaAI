@@ -19,6 +19,7 @@ def index(request):
 
 def noticia_detalhe(request, id):
     try:
+        print(f"{API_URL}/{id}")
         response = requests.get(f"{API_URL}/{id}", timeout=5)
         response.raise_for_status()
         noticia = response.json()
