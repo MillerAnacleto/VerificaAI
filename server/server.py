@@ -1,16 +1,22 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import openai
 import os
 from dotenv import load_dotenv
 from database import Database, Report
-from typing import List
+from typing import List, Optional
 from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
 class Tweet(BaseModel):
     text: str
+    tweet_url: str
+
+class ReportSummary(BaseModel):
+    id: Optional[int] = None
+    title: str
+    summary: str
 
 class APIServer:
     def __init__(self):
@@ -31,7 +37,8 @@ class APIServer:
 
     def register_routes(self):
         self.app.post("/analyze", response_model=Report)(self.analyze_tweet)
-        self.app.get("/reports", response_model=List[Report])(self.get_reports)
+        self.app.get("/reports", response_model=List[ReportSummary])(self.get_reports)
+        self.app.get("/reports/{id}", response_model=Report)(self.get_report_by_id)
 
     async def analyze_tweet(self, tweet: Tweet):
         """
@@ -68,23 +75,38 @@ class APIServer:
         title = "Alegações Falsas em Tweet"
         classification = "Fake News"
         explanation = "Este tweet contém alegações que não são suportadas por evidências e foram desmentidas por várias fontes."
+        summary = "Este tweet contém alegações que não são suportadas por evidências e foram desmentidas por várias fontes."
+        sources = ["https://www.reuters.com/article/factcheck-coronavirus-vaccine-idUSL1N2S61Y4", "https://www.bbc.com/news/56929642"]
 
 
         report = Report(
+            title=title,
             tweet_text=tweet.text,
             report_text=explanation,
-            report_type=classification
+            report_type=classification,
+            tweet_url=tweet.tweet_url,
+            summary=summary,
+            sources=sources
         )
 
-        self.db.save_report(report)
+        report.id = self.db.save_report(report)
         self.reports.append(report)
         return report
 
-    async def get_reports(self):
+    async def get_reports(self) -> List[ReportSummary]:
         """
         Returns all the generated reports.
         """
-        return self.reports
+        return [ReportSummary(id=r.id, title=r.title, summary=r.summary) for r in self.reports]
+
+    async def get_report_by_id(self, id: int) -> Report:
+        """
+        Returns a single report by its ID.
+        """
+        for report in self.reports:
+            if report.id == id:
+                return report
+        raise HTTPException(status_code=404, detail="Report not found")
 
 # Configure OpenAI API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
