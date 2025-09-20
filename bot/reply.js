@@ -26,8 +26,6 @@ if (
 const twitterClient = new TwitterApi(TWITTER_CONFIG);
 const twitterUserClient = twitterClient.readWrite;
 
-// ID da sua conta de bot. Você pode encontrar este ID no painel de desenvolvedor.
-// É um número longo, por exemplo: '1234567890123456789'
 const BOT_USER_ID = "1969400609096024064"; 
 
 const PROCESSED_TWEETS_FILE = "./processed_tweets.json";
@@ -73,10 +71,10 @@ async function sendTweetToAPI(tweetText, tweetUrl) {
 
     const data = await response.json();
     console.log("Resposta do servidor Python:", data);
-    return data; // Adicione este 'return' para enviar os dados de volta
+    return data;
   } catch (error) {
     console.error("Erro ao enviar tweet para a API:", error);
-    return null; // É uma boa prática retornar algo (ex: null) em caso de erro
+    return null;
   }
 }
 
@@ -86,7 +84,6 @@ async function checkAndReplyToMentions() {
 
     console.log("Buscando novas menções...");
 
-    // AQUI ESTÁ A MUDANÇA: Adicionamos "public_metrics" nos campos do tweet
     const mentions = await twitterUserClient.v2.userMentionTimeline(BOT_USER_ID, {
       "tweet.fields": ["author_id", "in_reply_to_user_id", "referenced_tweets", "public_metrics"],
       expansions: ["author_id", "referenced_tweets.id", "referenced_tweets.id.author_id"],
@@ -126,7 +123,6 @@ async function checkAndReplyToMentions() {
           const originalUsername = originalTweetAuthor ? originalTweetAuthor.username : "usuário-original";
           const originalTweetUrl = `https://twitter.com/${originalUsername}/status/${referencedTweet.id}`;
 
-          // AQUI ESTÁ A SEGUNDA MUDANÇA: Acessando as métricas públicas
           const likesCount = referencedTweet.public_metrics.like_count;
           const repliesCount = referencedTweet.public_metrics.reply_count;
           
@@ -178,10 +174,10 @@ async function checkAndReplyToMentions() {
 }
 
 // Configura o bot para rodar a cada 5 minutos
-//setInterval(checkAndReplyToMentions, 5 * 60 * 1000);
+setInterval(checkAndReplyToMentions, 5 * 60 * 1000);
 
 // Executa a função na inicialização
-//checkAndReplyToMentions();
+checkAndReplyToMentions();
 
 async function runTest() {
   console.log("Iniciando teste da função sendTweetToAPI...");
@@ -202,4 +198,5 @@ async function runTest() {
 }
 
 // Inicia o teste
-runTest();
+//runTest();
+
