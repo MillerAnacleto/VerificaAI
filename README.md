@@ -25,6 +25,33 @@ Consiste em um **bot para o X** que pode ser chamado via **@Verif1cAI**. Ao ser 
 -   `server/`: O backend do projeto, onde a mágica acontece. Ele avalia se um tweet é uma fake news, encontra outros tweets relacionados e gera o relatório.
 -   `site/`: O frontend, onde os relatórios detalhados são exibidos.
 
+##  Como Executar o Projeto
+
+1.  **Pré-requisitos:** Certifique-se de ter [lista de pré-requisitos, como Python, Node.js, etc.] instalados.
+2.  **Clone o repositório:**
+    ```sh
+    git clone https://github.com/MillerAnacleto/VerificaAI.git
+    ```
+3.  **Configurar credenciais:** Crie um arquivo `.env` com as chaves da API do Twitter, conforme o guia de configuração e a chave da openai.
+4.  **Instale as dependências:**
+    ```sh
+    cd bot
+    pip install -r requirements.txt
+
+    cd ../server
+    npm install
+    ```
+5.  **Inicie os serviços:**
+    ```sh
+    # No terminal 1, inicie o servidor
+    cd server
+    node index.js
+
+    # No terminal 2, inicie o bot
+    cd ../bot
+    python bot.py
+    ```
+
 ## Autores
 
 - **Artur De Vlieger Lima/Deflyer** - [GitHub](https://github.com/Deflyer)
