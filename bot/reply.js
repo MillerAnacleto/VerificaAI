@@ -72,8 +72,10 @@ async function sendTweetToAPI(tweetText, tweetUrl) {
 
     const data = await response.json();
     console.log("Resposta do servidor Python:", data);
+    return data; // Adicione este 'return' para enviar os dados de volta
   } catch (error) {
     console.error("Erro ao enviar tweet para a API:", error);
+    return null; // É uma boa prática retornar algo (ex: null) em caso de erro
   }
 }
 
