@@ -150,8 +150,8 @@ async function checkAndReplyToMentions() {
   }
 }
 
-// Configura o bot para rodar a cada 30 segundos
-setInterval(checkAndReplyToMentions, 1 * 30 * 1000);
+// Configura o bot para rodar a cada 5 minutos
+setInterval(checkAndReplyToMentions, 5 * 60 * 1000);
 
 // Executa a função na inicialização
 checkAndReplyToMentions();
