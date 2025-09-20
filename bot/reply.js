@@ -1,5 +1,4 @@
-const path = require('path');
-require("dotenv").config({ path: path.resolve(__dirname, '../.env') });
+require("dotenv").config();
 const { TwitterApi } = require("twitter-api-v2");
 const fs = require("fs").promises;
 
@@ -60,14 +59,14 @@ async function checkAndReplyToMentions() {
 
     console.log("Buscando novas menções...");
 
+    // AQUI ESTÁ A MUDANÇA: Adicionamos "public_metrics" nos campos do tweet
     const mentions = await twitterUserClient.v2.userMentionTimeline(BOT_USER_ID, {
-      "tweet.fields": ["author_id", "in_reply_to_user_id"],
-      expansions: ["author_id", "referenced_tweets.id"],
+      "tweet.fields": ["author_id", "in_reply_to_user_id", "referenced_tweets", "public_metrics"],
+      expansions: ["author_id", "referenced_tweets.id", "referenced_tweets.id.author_id"],
+      "user.fields": ["username"],
       max_results: 10,
     });
     
-    // Filtra apenas os tweets que são respostas a outros tweets,
-    // e que ainda não foram processados
     const newMentions = mentions.data.data.filter(
       (tweet) => !processedTweets.has(tweet.id) && tweet.in_reply_to_user_id
     );
@@ -88,18 +87,31 @@ async function checkAndReplyToMentions() {
         
         const userName = author ? author.username : "usuário";
 
-        // AQUI ESTÁ A SEGUNDA MUDANÇA: encontre o tweet de referência
         const referencedTweet = mentions.data.includes.tweets.find(
           (tweet) => tweet.id === mention.referenced_tweets[0].id
         );
 
         if (referencedTweet) {
+          const originalTweetAuthor = mentions.data.includes.users.find(
+            (user) => user.id === referencedTweet.author_id
+          );
+          
+          const originalUsername = originalTweetAuthor ? originalTweetAuthor.username : "usuário-original";
+          const originalTweetUrl = `https://twitter.com/${originalUsername}/status/${referencedTweet.id}`;
+
+          // AQUI ESTÁ A SEGUNDA MUDANÇA: Acessando as métricas públicas
+          const likesCount = referencedTweet.public_metrics.like_count;
+          const repliesCount = referencedTweet.public_metrics.reply_count;
+          
           console.log(`\n--- Menção de @${userName} encontrada ---`);
           console.log(`ID do Tweet de menção: ${mention.id}`);
           console.log(`Texto do Tweet de menção: "${mention.text}"`);
           console.log(`\n--- Informações do Tweet Original ---`);
           console.log(`ID do Tweet original: ${referencedTweet.id}`);
           console.log(`Texto do Tweet original: "${referencedTweet.text}"`);
+          console.log(`Likes: ${likesCount}`);
+          console.log(`Comentários: ${repliesCount}`);
+          console.log(`Link do Tweet original: ${originalTweetUrl}`);
           console.log(`----------------------------------\n`);
         } else {
           console.log(`Não foi possível encontrar o tweet de referência para a menção ${mention.id}`);
@@ -126,7 +138,7 @@ async function checkAndReplyToMentions() {
 }
 
 // Configura o bot para rodar a cada 30 segundos
-setInterval(checkAndReplyToMentions, 5 * 60 * 1000);
+setInterval(checkAndReplyToMentions, 1 * 30 * 1000);
 
 // Executa a função na inicialização
 checkAndReplyToMentions();
