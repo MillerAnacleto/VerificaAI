@@ -57,6 +57,6 @@ Consiste em um **bot para o X** que pode ser chamado via **@Verif1cAI**. Ao ser 
 ## Autores
 
 - **Artur De Vlieger Lima/Deflyer** - [GitHub](https://github.com/Deflyer)
-- **Cairo Henrique Vaz Cotrim/Cairo-Henrique** - [GitHub](https://github.com/Cairo-Henrique)
+- **Cairo Henrique Va Cotrim/Cairo-Henrique** - [GitHub](https://github.com/Cairo-Henrique)
 - **Miller Matheus Anacleto Rocha/MillerAnacleto** - [GitHub](https://github.com/MillerAnacleto)
 - **Vitor Amorim Fróis/vitorfrois** - [GitHub](https://github.com/vitorfrois)
