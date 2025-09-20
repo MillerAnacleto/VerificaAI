@@ -1,5 +1,4 @@
-const path = require('path');
-require("dotenv").config({ path: path.resolve(__dirname, '../.env') });
+require("dotenv").config();
 const { TwitterApi } = require("twitter-api-v2");
 const fs = require("fs").promises;
 
@@ -114,10 +113,23 @@ async function checkAndReplyToMentions() {
           console.log(`Comentários: ${repliesCount}`);
           console.log(`Link do Tweet original: ${originalTweetUrl}`);
           console.log(`----------------------------------\n`);
-        } else {
-          console.log(`Não foi possível encontrar o tweet de referência para a menção ${mention.id}`);
-        }
+          const replyText = `Olá, @${originalUsername}! 👋`;
 
+          console.log(`\nTentando comentar no post original de @${originalUsername}...`);
+          try {
+            const { data: createdReply } = await twitterUserClient.v2.tweet(replyText, {
+            reply: { in_reply_to_tweet_id: referencedTweet.id },
+            });
+            console.log(`Comentário postado com sucesso! 🎉 ID: ${createdReply.id}`);
+            console.log(`URL do Comentário: https://twitter.com/user/status/${createdReply.id}`);
+          } catch (error) {
+            console.error("Erro ao postar o comentário:", error.message || error);
+          }
+
+        } else {
+        console.log(`Não foi possível encontrar o tweet de referência para a menção ${mention.id}`);
+        }
+    
         processedTweets.add(mention.id);
         
         await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -139,7 +151,7 @@ async function checkAndReplyToMentions() {
 }
 
 // Configura o bot para rodar a cada 30 segundos
-setInterval(checkAndReplyToMentions, 5 * 60 * 1000);
+setInterval(checkAndReplyToMentions, 1 * 30 * 1000);
 
 // Executa a função na inicialização
 checkAndReplyToMentions();
