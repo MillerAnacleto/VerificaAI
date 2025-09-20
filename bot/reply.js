@@ -53,6 +53,30 @@ async function saveProcessedTweets(processedTweets) {
 }
 
 
+async function sendTweetToAPI(tweetText, tweetUrl) {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: tweetText,
+        tweet_url: tweetUrl,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro de HTTP! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Resposta do servidor Python:", data);
+  } catch (error) {
+    console.error("Erro ao enviar tweet para a API:", error);
+  }
+}
+
 async function checkAndReplyToMentions() {
   try {
     const processedTweets = await loadProcessedTweets();
@@ -125,7 +149,7 @@ async function checkAndReplyToMentions() {
           } catch (error) {
             console.error("Erro ao postar o comentário:", error.message || error);
           }
-
+          await sendTweetToAPI(referencedTweet.text, originalTweetUrl);
         } else {
         console.log(`Não foi possível encontrar o tweet de referência para a menção ${mention.id}`);
         }
