@@ -27,9 +27,7 @@ Consiste em um **bot para o X** que pode ser chamado via **@Verif1cAI**. Ao ser 
 
 ## Autores
 
-- **Artur De Vlieger Lima/Deflyer** - [Link para seu GitHub](https://github.com/Deflyer)
-- **Cairo Henrique Vaz Cotrim/Cairo-Henrique** - [Link para seu GitHub](https://github.com/Cairo-Henrique)
-- **Miller Matheus Anacleto Rocha/MillerAnacleto** - [Link para seu GitHub](https://github.com/MillerAnacleto)
-- **Vitor Amorim Fróis/vitorfrois** - [Link para seu GitHub](https://github.com/vitorfrois)
-
-- **[Nome do(a) seu(sua) colega]** - [Link para o GitHub dele(a)](https://github.com/[usuario-dele])
+- **Artur De Vlieger Lima/Deflyer** - [GitHub](https://github.com/Deflyer)
+- **Cairo Henrique Vaz Cotrim/Cairo-Henrique** - [GitHub](https://github.com/Cairo-Henrique)
+- **Miller Matheus Anacleto Rocha/MillerAnacleto** - [GitHub](https://github.com/MillerAnacleto)
+- **Vitor Amorim Fróis/vitorfrois** - [GitHub](https://github.com/vitorfrois)
