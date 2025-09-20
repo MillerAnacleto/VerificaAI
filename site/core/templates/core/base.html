@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>verificAI</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Header -->
+  <header class="bg-white shadow-md flex justify-between items-center">
+    <div class="mx-auto container flex justify-between items-center">
+        <!-- Logo -->
+        <a href="{% url 'index' %}" class="flex items-center">
+        <img src="{% static 'core/img/logo.png' %}" alt="verificAI" class="h-24">
+        </a>
+
+        <!-- Navegação -->
+        <nav class="p-4">
+            <a href="{% url 'index' %}" 
+                class="px-4 py-2 rounded hover:bg-blue-100 hover:text-blue-700 transition">
+                Home
+            </a>
+            <a href="{% url 'sobre' %}" 
+                class="px-4 py-2 rounded hover:bg-blue-100 hover:text-blue-700 transition">
+                Sobre
+            </a>
+        </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="container mx-auto px-8 py-6 lg:px-24 lg:py-12">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

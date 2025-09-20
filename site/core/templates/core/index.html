@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+
+{% extends "core/base.html" %}
+
+{% block content %}
+  <h2>Notícias verificadas</h2>
+  <div class="grid">
+    {% for n in noticias %}
+      <div class="card">
+        <h3>{{ n.titulo }}</h3>
+        <p>{{ n.resumo }}</p>
+        <a href="{% url 'noticia_detalhe' n.id %}">Ver relatório</a>
+      </div>
+    {% empty %}
+      <p>Nenhuma notícia encontrada.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

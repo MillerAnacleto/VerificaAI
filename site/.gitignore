@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.so
+*.egg
+*.egg-info/
+.eggs/
+*.log
+
+# Ambiente virtual
+venv/
+env/
+.venv/
+ENV/
+
+# Django
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+*.pot
+
+# Configuração do Django
+*.secret
+*.env
+.env.local
+.env.*.local
+
+# PyCharm / VSCode
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Testes
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Build
+dist/
+build/
+*.spec
+
+# Migrations (opcional: comente se quiser versionar)
+*/migrations/__pycache__/
+*/migrations/*.py

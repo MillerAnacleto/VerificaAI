@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+  {% if noticia %}
+    <h2>{{ noticia.titulo }}</h2>
+    <p><strong>Resumo:</strong> {{ noticia.resumo }}</p>
+    <p><strong>Post inicial:</strong> {{ noticia.post_inicial }}</p>
+    <p><strong>Relatório:</strong> {{ noticia.relatorio }}</p>
+    <p><a href="{{ noticia.fonte }}" target="_blank">Fonte original</a></p>
+  {% else %}
+    <p>Relatório não encontrado.</p>
+  {% endif %}
+{% endblock %}
