@@ -1,4 +1,5 @@
-require("dotenv").config();
+const path = require('path');
+require("dotenv").config({ path: path.resolve(__dirname, '../.env') });
 const { TwitterApi } = require("twitter-api-v2");
 const fs = require("fs").promises;
 
@@ -138,7 +139,7 @@ async function checkAndReplyToMentions() {
 }
 
 // Configura o bot para rodar a cada 30 segundos
-setInterval(checkAndReplyToMentions, 1 * 30 * 1000);
+setInterval(checkAndReplyToMentions, 5 * 60 * 1000);
 
 // Executa a função na inicialização
 checkAndReplyToMentions();
